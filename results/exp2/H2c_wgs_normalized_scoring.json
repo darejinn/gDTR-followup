@@ -1,0 +1,106 @@
+{
+  "cohort_shape": [
+    6191,
+    121
+  ],
+  "wgs_background_summary_written_to": "/NHNHOME/WORKSPACE/0526040123_A/darejinn/tdig/wgs/results/genome_summary/wgs_variant_background.json",
+  "multiclass": {
+    "cos32_only (paper baseline)": {
+      "macro_f1": 0.6411425003947602,
+      "bal_acc": 0.6170788613109693,
+      "ovr_auroc": {
+        "canonical_splice": 0.8746034544367133,
+        "missense": 0.7408975095776157,
+        "nonsense": 0.8892146448186178,
+        "synonymous": 0.8887688519486241
+      },
+      "n_features": 32
+    },
+    "cos32 + raw EXP3": {
+      "macro_f1": 0.6587742385360262,
+      "bal_acc": 0.6354857390095372,
+      "ovr_auroc": {
+        "canonical_splice": 0.8917922295552151,
+        "missense": 0.7878463213846943,
+        "nonsense": 0.8986728536486198,
+        "synonymous": 0.9181047449488309
+      },
+      "n_features": 42
+    },
+    "cos32 + WGS-normalized EXP3": {
+      "macro_f1": 0.6864183189125277,
+      "bal_acc": 0.6619028491207465,
+      "ovr_auroc": {
+        "canonical_splice": 0.903913941437791,
+        "missense": 0.8029177202124763,
+        "nonsense": 0.9023207636060896,
+        "synonymous": 0.9192879812330338
+      },
+      "n_features": 42
+    },
+    "cos32 + scalars": {
+      "macro_f1": 0.6668724188544316,
+      "bal_acc": 0.6463336290013532,
+      "ovr_auroc": {
+        "canonical_splice": 0.8928514220666528,
+        "missense": 0.8013392994150539,
+        "nonsense": 0.9116737765329237,
+        "synonymous": 0.9284789532778809
+      },
+      "n_features": 37
+    },
+    "cos32 + scalars + WGS-normalized": {
+      "macro_f1": 0.713075033607284,
+      "bal_acc": 0.6919092755527148,
+      "ovr_auroc": {
+        "canonical_splice": 0.9255333164620791,
+        "missense": 0.8363632163990362,
+        "nonsense": 0.9192174199252656,
+        "synonymous": 0.9423236166478411
+      },
+      "n_features": 47
+    },
+    "cos32 + scalars + raw EXP3 + WGS-normalized": {
+      "macro_f1": 0.8149323591501034,
+      "bal_acc": 0.8026176565872134,
+      "ovr_auroc": {
+        "canonical_splice": 0.999991469590512,
+        "missense": 0.8552035552264756,
+        "nonsense": 0.9246663095599197,
+        "synonymous": 0.9488862316788628
+      },
+      "n_features": 57
+    },
+    "WGS-normalized only": {
+      "macro_f1": 0.438280830294433,
+      "bal_acc": 0.423385201394774,
+      "ovr_auroc": {
+        "canonical_splice": 0.8330726819323084,
+        "missense": 0.7277177282241086,
+        "nonsense": 0.6768796184551046,
+        "synonymous": 0.8048041684561842
+      },
+      "n_features": 10
+    },
+    "raw EXP3 only": {
+      "macro_f1": 0.3736113876787024,
+      "bal_acc": 0.38336988559592994,
+      "ovr_auroc": {
+        "canonical_splice": 0.7565397436517166,
+        "missense": 0.7128443588578125,
+        "nonsense": 0.6551044537234834,
+        "synonymous": 0.7973914143946365
+      },
+      "n_features": 10
+    }
+  },
+  "binary_auroc": {
+    "cos32": 0.8436828058102639,
+    "cos32 + raw EXP3": 0.8462153674069696,
+    "cos32 + WGS-normalized": 0.8469854449580405,
+    "cos32 + both": 0.8489259314702535,
+    "raw EXP3 only": 0.6710845916353658,
+    "WGS-normalized only": 0.6780225084783885
+  },
+  "runtime_sec": 83.43921446800232
+}

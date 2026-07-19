@@ -1,0 +1,11 @@
+{
+  "paper_gamma_frozen": 0.397,
+  "target_quantile": 0.7,
+  "n_chromosomes": 24,
+  "wgs_mean_recalib_gamma": 0.5007627457380295,
+  "wgs_sd_recalib_gamma": 0.0014930987880771409,
+  "wgs_min_recalib_gamma": 0.4953833818435669,
+  "wgs_max_recalib_gamma": 0.5032839179039001,
+  "wgs_mean_shift_vs_paper": 0.10376274573802946,
+  "runtime_sec": 133.10634231567383
+}

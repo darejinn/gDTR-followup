@@ -1,0 +1,17 @@
+{
+  "n_ccre_records_total": 809429,
+  "n_ccre_bp_total": 222263713,
+  "n_ccre_pos_analyzed_total": 222260716,
+  "n_intron_pos_analyzed_total": 1669197918,
+  "wgs_mean_c_t_ccre": 29.41710600527929,
+  "wgs_mean_c_t_intron_baseline": 30.11177527607582,
+  "wgs_d_c_t_ccre_vs_intron_wavg": -0.13161496494823333,
+  "wgs_d_c_t_std_across_chr": 0.04399332824811231,
+  "wgs_mean_oscil_ccre": 0.37952006241156266,
+  "wgs_mean_oscil_intron_baseline": 0.27627707931083817,
+  "wgs_d_oscil_ccre_vs_intron_wavg": 0.11734253067487005,
+  "wgs_d_oscil_std_across_chr": 0.038079472750686655,
+  "paper_ccre_d_c_t_chr22_only": -0.118,
+  "delta_wgs_vs_paper_d_c_t": -0.013614964948233332,
+  "runtime_sec": 409.37609243392944
+}

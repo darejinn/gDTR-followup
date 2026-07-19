@@ -1,0 +1,174 @@
+{
+  "strata_counts": {
+    "never_crossed": {
+      "3utr": 2562,
+      "5utr": 416,
+      "coding_exon": 7163,
+      "intergenic": 101195,
+      "intron": 97242,
+      "splice_acceptor": 240,
+      "splice_donor": 263
+    },
+    "committed": {
+      "3utr": 1,
+      "5utr": 0,
+      "coding_exon": 948,
+      "intergenic": 4444,
+      "intron": 290,
+      "splice_acceptor": 22,
+      "splice_donor": 86
+    },
+    "dipped": {
+      "3utr": 18,
+      "5utr": 20,
+      "coding_exon": 402,
+      "intergenic": 3732,
+      "intron": 4822,
+      "splice_acceptor": 55,
+      "splice_donor": 41
+    },
+    "deliberating": {
+      "3utr": 17,
+      "5utr": 26,
+      "coding_exon": 327,
+      "intergenic": 4262,
+      "intron": 8283,
+      "splice_acceptor": 73,
+      "splice_donor": 50
+    }
+  },
+  "fisher_or_vs_intron": {
+    "intergenic": {
+      "committed": {
+        "n_ctx_stratum": 4444,
+        "n_ctx_other": 109189,
+        "n_intron_stratum": 290,
+        "n_intron_other": 110347,
+        "odds_ratio": 15.486657522972664,
+        "p_value": 0.0,
+        "frac_ctx": 0.03910835760738518,
+        "frac_intron": 0.0026211845946654375
+      },
+      "dipped": {
+        "n_ctx_stratum": 3732,
+        "n_ctx_other": 109901,
+        "n_intron_stratum": 4822,
+        "n_intron_other": 105815,
+        "odds_ratio": 0.7451779940055473,
+        "p_value": 2.8440848140253204e-40,
+        "frac_ctx": 0.03284257214013535,
+        "frac_intron": 0.04358397281198875
+      },
+      "deliberating": {
+        "n_ctx_stratum": 4262,
+        "n_ctx_other": 109371,
+        "n_intron_stratum": 8283,
+        "n_intron_other": 102354,
+        "odds_ratio": 0.4815356227600112,
+        "p_value": 0.0,
+        "frac_ctx": 0.03750671019862188,
+        "frac_intron": 0.07486645516418558
+      }
+    },
+    "coding_exon": {
+      "committed": {
+        "n_ctx_stratum": 948,
+        "n_ctx_other": 7892,
+        "n_intron_stratum": 290,
+        "n_intron_other": 110347,
+        "odds_ratio": 45.70711327053149,
+        "p_value": 0.0,
+        "frac_ctx": 0.10723981900452488,
+        "frac_intron": 0.0026211845946654375
+      },
+      "dipped": {
+        "n_ctx_stratum": 402,
+        "n_ctx_other": 8438,
+        "n_intron_stratum": 4822,
+        "n_intron_other": 105815,
+        "odds_ratio": 1.0454579326463436,
+        "p_value": 0.40209581868815414,
+        "frac_ctx": 0.045475113122171944,
+        "frac_intron": 0.04358397281198875
+      },
+      "deliberating": {
+        "n_ctx_stratum": 327,
+        "n_ctx_other": 8513,
+        "n_intron_stratum": 8283,
+        "n_intron_other": 102354,
+        "odds_ratio": 0.4746596093760005,
+        "p_value": 4.660987771934049e-47,
+        "frac_ctx": 0.036990950226244344,
+        "frac_intron": 0.07486645516418558
+      }
+    },
+    "splice_donor": {
+      "committed": {
+        "n_ctx_stratum": 86,
+        "n_ctx_other": 354,
+        "n_intron_stratum": 290,
+        "n_intron_other": 110347,
+        "odds_ratio": 92.43952854081434,
+        "p_value": 4.5737716497813185e-125,
+        "frac_ctx": 0.19545454545454546,
+        "frac_intron": 0.0026211845946654375
+      },
+      "dipped": {
+        "n_ctx_stratum": 41,
+        "n_ctx_other": 399,
+        "n_intron_stratum": 4822,
+        "n_intron_other": 105815,
+        "odds_ratio": 2.254919235043228,
+        "p_value": 6.5838539794670334e-06,
+        "frac_ctx": 0.09318181818181819,
+        "frac_intron": 0.04358397281198875
+      },
+      "deliberating": {
+        "n_ctx_stratum": 50,
+        "n_ctx_other": 390,
+        "n_intron_stratum": 8283,
+        "n_intron_other": 102354,
+        "odds_ratio": 1.5842457675126997,
+        "p_value": 0.0035483714177208313,
+        "frac_ctx": 0.11363636363636363,
+        "frac_intron": 0.07486645516418558
+      }
+    },
+    "splice_acceptor": {
+      "committed": {
+        "n_ctx_stratum": 22,
+        "n_ctx_other": 368,
+        "n_intron_stratum": 290,
+        "n_intron_other": 110347,
+        "odds_ratio": 22.747694902548727,
+        "p_value": 6.824700360367681e-22,
+        "frac_ctx": 0.05641025641025641,
+        "frac_intron": 0.0026211845946654375
+      },
+      "dipped": {
+        "n_ctx_stratum": 55,
+        "n_ctx_other": 335,
+        "n_intron_stratum": 4822,
+        "n_intron_other": 105815,
+        "odds_ratio": 3.602781406117484,
+        "p_value": 3.5888645390502377e-14,
+        "frac_ctx": 0.14102564102564102,
+        "frac_intron": 0.04358397281198875
+      },
+      "deliberating": {
+        "n_ctx_stratum": 73,
+        "n_ctx_other": 317,
+        "n_intron_stratum": 8283,
+        "n_intron_other": 102354,
+        "odds_ratio": 2.8456452366616127,
+        "p_value": 5.766841983217448e-13,
+        "frac_ctx": 0.18717948717948718,
+        "frac_intron": 0.07486645516418558
+      }
+    }
+  },
+  "verdicts": {
+    "splice_donor_deliberating_enriched": false,
+    "splice_acceptor_deliberating_enriched": true
+  }
+}

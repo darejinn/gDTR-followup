@@ -1,0 +1,60 @@
+{
+  "cohort_full_shape": [
+    6191,
+    85
+  ],
+  "class_counts": {
+    "canonical_splice": 362,
+    "missense": 1254,
+    "nonsense": 1741,
+    "synonymous": 2834
+  },
+  "auroc_per_class_OvR_32d": {
+    "canonical_splice": 0.8746034544367133,
+    "missense": 0.7408975095776157,
+    "nonsense": 0.8892146448186178,
+    "synonymous": 0.8887688519486241
+  },
+  "macro_f1_32d": 0.6411425003947602,
+  "balanced_acc_32d": 0.6170788613109693,
+  "macro_f1_1d_max_abs_dD": 0.33347084417320144,
+  "balanced_acc_1d_max_abs_dD": 0.39205560444540466,
+  "class_order": [
+    "canonical_splice",
+    "missense",
+    "nonsense",
+    "synonymous"
+  ],
+  "confusion_matrix_32d": [
+    [
+      142,
+      58,
+      45,
+      117
+    ],
+    [
+      56,
+      512,
+      251,
+      435
+    ],
+    [
+      18,
+      166,
+      1267,
+      290
+    ],
+    [
+      14,
+      76,
+      80,
+      2664
+    ]
+  ],
+  "chance_macro_f1": 0.25,
+  "verdict": {
+    "H2b_positive_32d": true,
+    "32d_beats_1d_scalar": true
+  },
+  "runtime_sec": 10.89685845375061
+}

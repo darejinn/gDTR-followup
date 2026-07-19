@@ -1,0 +1,8 @@
+{
+  "n_windows_ok": 79,
+  "gamma_cos": 0.397,
+  "seed": 42,
+  "avg_forward_sec_per_window": 0.12376683271383937,
+  "produced_by": "exp3_threshold_crossing/scripts/e3_00_forward_windows.py",
+  "produced_at": "2026-07-13 22:19:04"
+}

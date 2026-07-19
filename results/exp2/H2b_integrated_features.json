@@ -1,0 +1,118 @@
+{
+  "cohort_shape": [
+    6191,
+    105
+  ],
+  "class_counts": {
+    "canonical_splice": 362,
+    "missense": 1254,
+    "nonsense": 1741,
+    "synonymous": 2834
+  },
+  "baseline_paper": 0.641,
+  "results": {
+    "cos32_only (paper baseline)": {
+      "n_features": 32,
+      "macro_f1": 0.6411425003947602,
+      "bal_acc": 0.6170788613109693,
+      "classes": [
+        "canonical_splice",
+        "missense",
+        "nonsense",
+        "synonymous"
+      ],
+      "ovr_auroc": {
+        "canonical_splice": 0.8746034544367133,
+        "missense": 0.7408975095776157,
+        "nonsense": 0.8892146448186178,
+        "synonymous": 0.8887688519486241
+      }
+    },
+    "cos32 + EXP3_features": {
+      "n_features": 42,
+      "macro_f1": 0.6587742385360262,
+      "bal_acc": 0.6354857390095372,
+      "classes": [
+        "canonical_splice",
+        "missense",
+        "nonsense",
+        "synonymous"
+      ],
+      "ovr_auroc": {
+        "canonical_splice": 0.8917922295552151,
+        "missense": 0.7878463213846943,
+        "nonsense": 0.8986728536486198,
+        "synonymous": 0.9181047449488309
+      }
+    },
+    "cos32 + scalars": {
+      "n_features": 37,
+      "macro_f1": 0.6668724188544316,
+      "bal_acc": 0.6463336290013532,
+      "classes": [
+        "canonical_splice",
+        "missense",
+        "nonsense",
+        "synonymous"
+      ],
+      "ovr_auroc": {
+        "canonical_splice": 0.8928514220666528,
+        "missense": 0.8013392994150539,
+        "nonsense": 0.9116737765329237,
+        "synonymous": 0.9284789532778809
+      }
+    },
+    "cos32 + EXP3 + scalars (all)": {
+      "n_features": 47,
+      "macro_f1": 0.6824362022208333,
+      "bal_acc": 0.6630181929743232,
+      "classes": [
+        "canonical_splice",
+        "missense",
+        "nonsense",
+        "synonymous"
+      ],
+      "ovr_auroc": {
+        "canonical_splice": 0.9039987716210337,
+        "missense": 0.8258934989156838,
+        "nonsense": 0.9164060432787564,
+        "synonymous": 0.9422322750531914
+      }
+    },
+    "EXP3_features only (H3b-derived)": {
+      "n_features": 10,
+      "macro_f1": 0.3736113876787024,
+      "bal_acc": 0.38336988559592994,
+      "classes": [
+        "canonical_splice",
+        "missense",
+        "nonsense",
+        "synonymous"
+      ],
+      "ovr_auroc": {
+        "canonical_splice": 0.7565397436517166,
+        "missense": 0.7128443588578125,
+        "nonsense": 0.6551044537234834,
+        "synonymous": 0.7973914143946365
+      }
+    },
+    "scalars only": {
+      "n_features": 5,
+      "macro_f1": 0.4566856159551098,
+      "bal_acc": 0.4661374567283718,
+      "classes": [
+        "canonical_splice",
+        "missense",
+        "nonsense",
+        "synonymous"
+      ],
+      "ovr_auroc": {
+        "canonical_splice": 0.7695599920003715,
+        "missense": 0.7581254266275,
+        "nonsense": 0.7704593769562889,
+        "synonymous": 0.888164673023369
+      }
+    }
+  },
+  "runtime_sec": 16.143115282058716
+}

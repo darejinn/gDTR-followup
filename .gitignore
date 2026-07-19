@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Large regenerable files that must NOT enter git
+*.npy
+*.npz
+*.parquet
+*.h5
+*.hdf5
+*.pt
+*.safetensors
+*.bin
+
+# Genome data (regenerable via docs/REPRODUCE.md)
+data/reference_pointers/hg38.fa
+data/reference_pointers/hg38.fa.gz
+data/reference_pointers/hg38.fa.fai
+data/reference_pointers/gencode.*.gtf
+data/reference_pointers/gencode.*.gtf.gz
+data/reference_pointers/clinvar.vcf.gz*
+data/reference_pointers/encodeCcreCombined.b*
+data/reference_pointers/ccre_els*.bed
+data/reference_pointers/*.fa
+data/reference_pointers/*.fasta
+
+# Model weights + HF cache
+env/
+hf_cache/
+
+# Large intermediate results NOT committed
+results/**/chr*_per_position_chunk*.parquet
+results/**/*_position_labels.npy
+results/**/B_variants_oscil.parquet
+results/**/A_windows_chr22.npz
+results/**/A_crossing_stats.parquet
+
+# Logs
+logs/
+*.log
+!results/**/*_report.md

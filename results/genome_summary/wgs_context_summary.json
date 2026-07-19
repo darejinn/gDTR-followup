@@ -1,0 +1,93 @@
+[
+  {
+    "context": "intron",
+    "wgs_n_positions": 1669197918,
+    "wgs_mean_c_t": 30.111775609104253,
+    "wgs_d_c_t_wavg": 0.0,
+    "wgs_d_c_t_std_across_chr": 0.0,
+    "wgs_d_oscil_wavg": 0.0,
+    "wgs_d_oscil_std_across_chr": 0.0,
+    "paper_pooled_c_t": 27.72,
+    "paper_d_c_t": 0.0,
+    "delta_wgs_vs_paper_mean_c_t": 2.391775609104254,
+    "delta_wgs_vs_paper_d_c_t": 0.0
+  },
+  {
+    "context": "splice_donor",
+    "wgs_n_positions": 624245,
+    "wgs_mean_c_t": 28.68128859662472,
+    "wgs_d_c_t_wavg": -0.2829367220645465,
+    "wgs_d_c_t_std_across_chr": 0.05093552876856878,
+    "wgs_d_oscil_wavg": 0.21188728046848002,
+    "wgs_d_oscil_std_across_chr": 0.05156859673431962,
+    "paper_pooled_c_t": 25.55,
+    "paper_d_c_t": -0.354,
+    "delta_wgs_vs_paper_mean_c_t": 3.131288596624721,
+    "delta_wgs_vs_paper_d_c_t": 0.07106327793545347
+  },
+  {
+    "context": "splice_acceptor",
+    "wgs_n_positions": 610208,
+    "wgs_mean_c_t": 27.656036957889768,
+    "wgs_d_c_t_wavg": -0.48223182467411485,
+    "wgs_d_c_t_std_across_chr": 0.07418685971175304,
+    "wgs_d_oscil_wavg": 0.43842903716802534,
+    "wgs_d_oscil_std_across_chr": 0.08306776912526508,
+    "paper_pooled_c_t": 25.96,
+    "paper_d_c_t": -0.34,
+    "delta_wgs_vs_paper_mean_c_t": 1.696036957889767,
+    "delta_wgs_vs_paper_d_c_t": -0.14223182467411483
+  },
+  {
+    "context": "coding_exon",
+    "wgs_n_positions": 26451317,
+    "wgs_mean_c_t": 30.284469502974087,
+    "wgs_d_c_t_wavg": 0.024970506496876137,
+    "wgs_d_c_t_std_across_chr": 0.019415308667295378,
+    "wgs_d_oscil_wavg": -0.10148988755739641,
+    "wgs_d_oscil_std_across_chr": 0.017575553652487978,
+    "paper_pooled_c_t": 28.4,
+    "paper_d_c_t": 0.08,
+    "delta_wgs_vs_paper_mean_c_t": 1.8844695029740883,
+    "delta_wgs_vs_paper_d_c_t": -0.05502949350312386
+  },
+  {
+    "context": "3utr",
+    "wgs_n_positions": 50075413,
+    "wgs_mean_c_t": 29.61800295086932,
+    "wgs_d_c_t_wavg": -0.10030428283040167,
+    "wgs_d_c_t_std_across_chr": 0.037705759277143175,
+    "wgs_d_oscil_wavg": 0.08151157687328964,
+    "wgs_d_oscil_std_across_chr": 0.03699436936057373,
+    "paper_pooled_c_t": 27.74,
+    "paper_d_c_t": -0.02,
+    "delta_wgs_vs_paper_mean_c_t": 1.8780029508693232,
+    "delta_wgs_vs_paper_d_c_t": -0.08030428283040167
+  },
+  {
+    "context": "5utr",
+    "wgs_n_positions": 10058124,
+    "wgs_mean_c_t": 30.10388060437513,
+    "wgs_d_c_t_wavg": -0.010982184178919642,
+    "wgs_d_c_t_std_across_chr": 0.022058769944331657,
+    "wgs_d_oscil_wavg": 0.00041275596592330857,
+    "wgs_d_oscil_std_across_chr": 0.02173209364749169,
+    "paper_pooled_c_t": 29.22,
+    "paper_d_c_t": 0.2,
+    "delta_wgs_vs_paper_mean_c_t": 0.8838806043751326,
+    "delta_wgs_vs_paper_d_c_t": -0.21098218417891965
+  },
+  {
+    "context": "intergenic",
+    "wgs_n_positions": 1180738775,
+    "wgs_mean_c_t": 30.652540177652757,
+    "wgs_d_c_t_wavg": 0.1126552917899232,
+    "wgs_d_c_t_std_across_chr": 0.02519482162893427,
+    "wgs_d_oscil_wavg": -0.10796810704692703,
+    "wgs_d_oscil_std_across_chr": 0.023698000400175397,
+    "paper_pooled_c_t": 28.66,
+    "paper_d_c_t": 0.16,
+    "delta_wgs_vs_paper_mean_c_t": 1.9925401776527565,
+    "delta_wgs_vs_paper_d_c_t": -0.0473447082100768
+  }
+]
