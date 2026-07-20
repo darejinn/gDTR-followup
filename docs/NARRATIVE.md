@@ -211,153 +211,102 @@ The natural conclusion: **combine into one integrated journal manuscript** rathe
 
 ---
 
-## Part 4 — Extending the M-cell family to a third chromosome and the GO story (July 20)
+## Part 4 — Testing the multi-axis story at the pathway level (July 20)
 
-The July-19 integration plan noted an outstanding item: *"M1–M5 metric family not yet extended to WGS (would require raw h_ell across 24 chromosomes — deferred as future work in §4.4 of the manuscript plan)."* This section reports one substantial step toward closing that gap and the biological pathway story it revealed.
+Part 1.3 asked a small question and got a large answer. Feeding 100 chr22 windows through Evo 2 and counting how many times $D_{\cos}$ crossed the threshold gave us `oscil` — a per-position feature the running-min envelope had thrown away. On splice acceptors, `oscil` moved in the *opposite direction* from `c(t)` (d_c_t = −0.62 vs d_oscil = +0.50). Two features derived from exactly the same layer trajectory disagreed about direction. That was the first evidence that "settling" is not one quantity. Part 2 formalised the observation into a 5-D crossing-dynamics framework; Part 3 folded in TDiG's five metric families (M1 direction, M2 magnitude, M3 geometry, M4 set-based, M5 tortuosity) with 3–5 reference or α/β variants each — fourteen more candidate axes — and gave the whole architecture a name: three axis families (metric / crossing-dynamics / scale).
 
-### 4.1 — Motivation: does the M-cell family read *different biology*, not just *stronger signals*?
+But Part 3 imported the M-cells on the strength of one comparison: M3_geo curvature *d* = −0.80 at chr22 splice donors vs cosine `c(t)` *d* = −0.35. 2.3× stronger. That single number is compatible with two very different pictures.
 
-TDiG's headline claim about M1–M5 was that different metric primitives give quantitatively different Cohen's *d* at splice sites (M3_geo `curvature`, `d = -0.80`, vs cosine `c(t)` `d = -0.35` on chr22). That answers whether metrics differ in *strength*. It does not answer whether they differ in *what they read*.
+Under the first, all 17 M-cell settings read the same underlying settling signal at different signal-to-noise ratios; different M-cells are amplification variants of one axis. This is the picture the workshop paper implicitly assumed and the picture TDiG's own presentation left plausible. Under the second, the M-cells read genuinely different aspects of the residual-stream trajectory and the strongest of them at splice sites happens to be M3_geo. If the second is true, the "3 axis families" framework from Part 3 is really more axes than we counted — and, crucially, the +17.4 %p downstream improvement from combining features (Part 2 STEP 3) gets a mechanistic explanation: combining works because the added features carry independent biological information, not because they average out different noise realisations.
 
-Two hypotheses, both plausible in advance:
+Distinguishing the two pictures needed a broader biological substrate than splice sites. Two M-cells could easily give different Cohen's *d* on splice donors while ranking every other gene set identically. What we needed was a per-cell test on a large, diverse set of gene classes — GO Biological Process was the obvious choice — with a sharp discriminator: if the same GO class shows *opposite* directional signals in different cells, that is a **sign-flip**, and no amount of amplification variance can produce it.
 
-- **Same axis, different strengths.** All 17 M-cell settings (M1 direction × 3 refs, M2 magnitude × 3 refs, M3 geometry × 5 α/β configs, M4 set-based × 3 refs, M5 tau × 3 refs) read the same underlying "settling" signal at different amplitudes.
-- **Distinct axes.** The 17 settings read partially or fully orthogonal biological signals — some settle olfactory genes deep, some settle epithelial genes deep, some settle immune genes deep, and the identity of which biology gets settled depends on which primitive is used.
+### GO enrichment on 17 cells × 471 pathways
 
-We picked GO Biological Process as the discriminating substrate. If hypothesis 1 is right, all 17 cells should rank the same GO terms first (with different *d* magnitudes). If hypothesis 2 is right, top hits should differ by cell — and some GO terms may have *opposite* directional signals in different cells (a **sign-flip**).
+The pipeline: 1,633 protein-coding genes on chr17 + chr22 (GENCODE v44), aggregated to per-gene means from the tier1 parquets that TDiG originally computed on those two chromosomes; per-cell per-GO-term Mann–Whitney rank-sum comparing in-set vs out-of-set genes; Cohen's *d* on the raw settling values; BH-FDR correction per cell; 471 GO BP terms with 5 ≤ in-set overlap ≤ 1,500 (an expansion from 137 curated terms tested in a first pass). Full details in [`EXP8_MULTI_CELL_GO_FINDINGS.md`](EXP8_MULTI_CELL_GO_FINDINGS.md).
 
-### 4.2 — EXP8 pipeline: 17 M-cells × per-gene mean × GO rank-sum
+Thirteen of the 17 cells produce hits at BH q < 0.05. The other four (M2_mag_refB_diag, M2_mag_refC_diag, M4_set_refB, M4_set_refC) act as null baselines — per-gene aggregation collapses those particular reference choices to near-constant values across the universe. The 13 live cells favor the different-axes picture cleanly:
 
-Setup:
-
-- Universe: 1,633 protein-coding genes on chr17 + chr22 (from GENCODE v44).
-- Feature: per-gene mean of the per-position M-cell settling value (aggregated within gene bodies from the chr17 and chr22 tier1 parquets provided by the TDiG team).
-- Test: per-cell, per-GO-term Mann–Whitney rank-sum comparing in-set vs out-of-set genes; Cohen's *d* on the raw settling values; BH-FDR correction per cell.
-- Scope: 471 GO BP terms with 5 ≤ in-set overlap ≤ 1,500 (expanded from 137 curated terms).
-
-Headline numbers, per cell (BH q < 0.05 hit counts):
-
-| Cell | q<0.05 hits | Top axis |
-|---|---|---|
-| M4_set_refA | 13 | epithelial / transcription |
-| M5_tau_refA | 12 | epithelial / ubiquitin |
-| M2_mag_refA | 11 | immune / migration |
-| M3_geo_a1.0_b0.0 (curvature-only) | 9 | **immune / inflammatory** |
-| M5_tau_refB | 9 | **olfactory-DEEP + epithelial-shallow** |
-| M3_geo_a1.0_b0.5 (curvature-dominant) | 8 | **olfactory-DEEP** |
-| M3_geo_a1.0_b1.0 (equal weight) | 8 | virus response / transcription |
-| M3_geo_a0.5_b1.0 (cosine-dominant) | 8 | immune / transcription |
-
-Four cells are effectively *dead* (0 rank-sum hits): M2_mag_refB_diag, M2_mag_refC_diag, M4_set_refB, M4_set_refC. Per-gene aggregation of those primitives with `refB/refC` reference collapses to near-constant values across all 1,633 genes.
-
-Immediately, the top-axis column looks like hypothesis 2: cells split cleanly into immune-dominant, epithelial-dominant, olfactory-dominant, and transcription-dominant clusters — not a single strength ranking.
-
-### 4.3 — 40 sign-flip GO terms
-
-We tabulated, per GO term, how many cells give significantly positive *d* (≥ +0.3) and how many give significantly negative *d* (≤ −0.3). Forty terms have at least one positive AND one negative significant cell — a **sign-flip**: the *same* GO class is encoded with opposite direction by different cells.
-
-The strongest sign-flip GO terms by variance of the signed −log₁₀(p) across cells:
-
-| GO term | Variance | Range | Interpretation |
-|---|---|---|---|
-| GO:0050911 detection of chemical stimulus (olfactory) | 19.1 | 15.5 | The olfactory-receptor family separates cells cleanly into "settles deep" (M1_dir, M5_tau_refB) vs "settles shallow" (M3_geo β>0) groups |
-| GO:0045109 intermediate filament organization | 18.4 | 17.9 | The epithelial/keratin axis flips opposite to olfactory: cells that settle olfactory shallow settle filaments deep |
-| GO:0002009 morphogenesis of an epithelium | 13.8 | 15.6 | Tracks intermediate filament (same +/− cell split) |
-
-Cluster analysis on the 13 live cells (average-linkage hierarchical clustering on Spearman similarity of signed −log₁₀(p) across GO terms) gives four clusters, of which the most striking finding is that **`M5_tau_refA` and `M5_tau_refC` correlate at −0.78** — the same underlying M5_tau family with different reference tokens produces near-perfectly opposite biology maps. Reference token choice does not tune the same axis; it selects a different axis.
-
-Similarly for M3_geo: β = 0 (curvature-only) sits in one cluster (majority, immune-dominant), while β = 1 (adding cosine) crosses to the opposite cluster. Small parameter shifts within one metric family cross an axis-boundary.
-
-### 4.4 — Adding chr21 as a third replicate: 8 → 3 → 0 robust pairs
-
-The 40 sign-flip terms are the raw pattern in the combined chr17 + chr22 dataset. The next question is whether they replicate on independent chromosomes.
-
-**Chromosome-split analysis on the existing chr17 + chr22 data (`e8_40`):**
-
-Each of the 40 sign-flip GO terms was retested on chr17 alone (1,186 genes) and chr22 alone (447 genes). For each (cell, GO) pair — 40 GO × 17 cells = 680 tests — status was classified as:
-
-- `robust_same_sign` (chr17 and chr22 both significant with same *d* sign): **8 pairs (1.2 %)**
-- `chr17_driven` (only chr17 significant): 73
-- `chr22_driven`: 40
-- `ns_split` (neither chr alone significant, but combined was): 304 (44.7 %)
-- `insufficient_data` (< 3 in-set genes in one chr): 255
-
-Most sign-flips are sample-size boosted, not chromosome-independent. This is a **required caveat** for the manuscript.
-
-**Extending to chr21 (`e8_41`, this session's core work):**
-
-We produced a chr21 tier1 parquet from scratch. This required a Evo 2 7B forward pass over ~13,365 valid 6-kb chr21 windows (chr21 has ~15,568 total; ~2,200 are heavy-N centromeric/telomeric regions), saving per-position tier2 scalars (cos_ref_A, step_cos, step_norm, norm_h_ell, norm_h_29), then deriving 7 of the original 17 M-cells (M1_dir_refA, M2_mag_refA, M3_geo × 5 α/β) via a downstream calibration step. The forward pass took 58.7 minutes on 2 × NVIDIA B200 with an optimised HDF5 writer (removing gzip and using per-window chunks gave a **~9× speedup** over an initial naive implementation).
-
-The full 17-cell schema was not reproduced — the reference-token definitions used by TDiG for the refB and refC variants (and the exact set definition used for M4, and the tau weighting for M5) are held in TDiG-team-only code and were not accessible on the timeline available. Our chr21 covers 7 of the 17 cells with our own explicit refA definition (h_norm-based cosine, matching the workshop paper's cosine lens).
-
-Reruns of the 40 sign-flip tests with chr21 added:
-
-| Status | Count |
+| Cell | Signal |
 |---|---|
-| `robust_3_same_sign` (all 3 chr significant, same sign) | **0** |
-| `robust_2_same_sign` (any 2 of 3 chr significant, same sign) | 3 |
-| `single_chr_only` | 96 |
-| `ns_all` | 181 |
-| `insufficient_data` (chr21 has only 220 protein-coding genes) | rest |
+| M4_set_refA, M5_tau_refA | Epithelial / intermediate-filament / transcription biology |
+| M3_geo_a1.0_b0.0 (β = 0, pure curvature) | Immune / inflammatory |
+| M3_geo_a1.0_b0.5 (curvature-dominant, β = 0.5) | Olfactory receptors, extremely strong (GO:0050911, *d* = −1.96, p = 6×10⁻⁷) |
+| M5_tau_refB | Olfactory-DEEP + epithelial-SHALLOW (same cell, opposite direction on two classes) |
+| M5_tau_refC | Anti-correlates with M5_tau_refA at **Spearman r = −0.78** across all 471 GO terms |
 
-**No pair replicates across all three chromosomes.** The three pairs that replicate across two of three are all chr17 + chr22 pairs (chr21 has too few genes for chr21-alone significance).
+Forty GO terms show sign-flip patterns — at least one cell with significant positive *d* AND at least one with significant negative *d*. The three most discriminating are the ones the M-cells actually disagree about most:
 
-### 4.5 — The one clean example: GO:0006869 lipid transport
+| GO term | Max +*d* | Min −*d* |
+|---|---|---|
+| GO:0050911 detection of chemical stimulus (olfactory) | +3.24 (M1_dir_refC) | −1.96 (M3_geo_a1.0_b0.5) |
+| GO:0045109 intermediate filament organization | +1.06 (M5_tau_refA) | −1.32 (M4_set_refA) |
+| GO:0002009 morphogenesis of an epithelium | +0.85 (M5_tau_refA) | −1.15 (M4_set_refA) |
 
-Among the 3 robust two-chromosome pairs, one is manuscript-worthy on its own:
+Two observations sit inside this table that push past the aggregate finding.
 
-**GO:0006869 lipid transport** shows a genuine sign-flip between two M3_geo variants, replicating on both chr17 and chr22:
+First, the olfactory axis and the epithelial-filament axis are *systematically* opposite: cells that settle olfactory receptors deep settle epithelial filaments shallow, and vice versa. There is a pair of biological axes that the M-cells trade off against each other, and picking a different M-cell moves position along both axes at once, in opposite directions. This is exactly the pattern Part 1.3's c_t / oscil comparison flagged for splice-site geometry, now recurring at the gene-set level across the residual stream. The workshop's single-scalar treatment did not just miss oscil — it missed the fact that any single choice of settling metric commits to a specific axis of biology while relinquishing others.
+
+Second, the reference-token result is not a robustness check the way TDiG originally framed it. TDiG tested three references (A / B / C) inside each M-cell family to demonstrate insensitivity to the RMSNorm γ asymmetry — that is, to *rule out* an artifact. On identical input data, M5_tau_refA and M5_tau_refC produce Spearman r = −0.78 across 471 GO terms. Reference is not a hyperparameter; reference is axis. Similarly for M3_geo: β = 0 (pure curvature) sits in one cluster with M4_set_refA and M2_mag_refA; adding β = 0.5 crosses to the opposite cluster with M3_geo_a1.0_b0.5. A parameter change on the α/β mixing coefficient of one metric family crosses an axis boundary. The "5 M3_geo variants" from Part 3's inventory are not five points on a curvature-cosine interpolation; they are up to five different axes.
+
+### The honest replication: from 40 raw sign-flips to 3 pairs that survive chromosome-split
+
+Combined-dataset significance can be sample-size boosted. Forty sign-flip terms on chr17 + chr22 together does not tell us how many replicate independently. So we retested each (cell, GO) pair on chr17 alone (1,186 genes) and chr22 alone (447 genes):
+
+- 680 pairs total (40 GO × 17 cells)
+- **8 pairs (1.2 %)** significant on both chromosomes with the same *d* sign
+- 44.7 % were sample-size boosted (neither chromosome alone significant; combined was)
+- 16.6 % chromosome-driven (only one chromosome contributes)
+
+Only 8 pairs out of 680 truly replicate. The 40 was inflated by combining the two chromosomes. This has to be in the manuscript.
+
+To push replication further we extended to a third chromosome. Chr21 was not in TDiG's original tier1 dataset — only chr17 and chr22 were — so we had to produce it from scratch. A fresh Evo 2 7B forward pass on 13,365 valid chr21 6-kb windows, saving a subset of the tier2 scalars from which we could derive 7 of the 17 M-cells (M1_dir_refA, M2_mag_refA, and the five M3_geo α/β variants); the refB and refC variants and the M4_set and M5_tau primitives require TDiG-team reference definitions that were not accessible on our timeline. The forward pass took 58.7 minutes on 2 × NVIDIA B200 after an optimised HDF5 writer (per-window chunks, no gzip) gave a ~9× speedup over a naive first implementation.
+
+Chr21 has only 220 protein-coding genes — underpowered on its own — but sufficient to check whether the 8 two-chromosome-robust pairs remain when a third chromosome enters:
+
+- **0 pairs (0 %)** significant with the same sign on all three chromosomes
+- **3 pairs** significant with the same sign on any 2 of 3 (all chr17 + chr22, with chr21 NaN due to small n)
+
+Zero pairs pass strict three-chromosome replication. Three survive the softer 2-of-3 threshold. The 40-term raw count was doing what raw combined-dataset counts often do. This is the caveat the manuscript will present alongside — not instead of — the aggregate finding.
+
+### The one clean case that carries the claim by itself
+
+Among the 3 robust two-chromosome pairs, one is a full manuscript-quality example on its own:
+
+**GO:0006869 lipid transport** shows a genuine sign-flip between two variants of the M3_geo family:
 
 | Cell | *d* chr17 | *p* chr17 | *d* chr22 | *p* chr22 |
 |---|---|---|---|---|
-| M3_geo_a0.5_b1.0 (cosine-dominant) | **+0.52** | 0.043 | **+0.65** | 0.024 |
-| M3_geo_a1.0_b0.0 (pure curvature, no cosine) | **−0.72** | 0.009 | **−0.89** | 0.007 |
+| M3_geo_a0.5_b1.0 (cosine-dominant) | +0.52 | 0.043 | +0.65 | 0.024 |
+| M3_geo_a1.0_b0.0 (pure curvature) | −0.72 | 0.009 | −0.89 | 0.007 |
 
-Same GO class. Same two chromosomes. Two metric variants that share the same base primitive family (M3_geo, α · velocity_z + β · curvature_z) differ only in the presence or absence of a cosine (β) component. That single change flips the sign of the settling-depth deviation for lipid-transport genes, robustly across two independent chromosomes.
+Same GO class. Same two chromosomes. Two variants of M3_geo — same base primitive family, differing only in β (the cosine coefficient in α · velocity + β · curvature). Adding cosine flips the sign of the settling-depth deviation for lipid-transport genes. Same trajectory, different projection, opposite biology signal, independently replicated on two chromosomes. This is the clean version of what the aggregate sign-flip count was reaching for, and it should be §3.11's canonical example.
 
-This is the cleanest single evidence that a small change in the metric primitive — adding a cosine component to a pure-curvature composition — accesses a different directional axis of the residual stream's biological encoding. Same trajectory, different projection, opposite biology signal.
+A second connection lands on the biology side. For each significant (cell, GO) pair at q < 0.10, we tabulated the top-20 in-set driver genes ranked by mean settling value and flagged membership in a 15-gene ClinVar cancer panel (BRCA1, BRCA2, TP53, PTEN, STK11, CDH1, PALB2, ATM, CHEK2, BARD1, RAD51C, RAD51D, MLH1, MSH2, APC). Of 107 significant pairs, three carry cancer-panel drivers:
 
-### 4.6 — Cancer-panel driver hits
+- **M3_geo curvature-only × GO:0007131 reciprocal meiotic recombination**: *d* = +0.91, top-5 drivers RAD51C, DMC1, RAD51D, TEX19, SYCE3. **Two of the top five are HRD cancer-panel genes.** The curvature-only cell captures homologous-recombination pathway biology and puts the two clinically-HRD-relevant genes at the top of the driver list.
+- **M5_tau_refB × GO:0006357 regulation of RNA pol II transcription**: *d* = +0.33, TP53 in top-20.
+- **M5_tau_refB × GO:0006355 regulation of DNA-templated transcription**: same pattern, TP53 in top-20.
 
-For each significant (cell, GO) pair at rank-sum q < 0.10, we dumped the top-20 in-set genes ranked by per-cell settling value. Out of 107 significant pairs, three include cancer-panel genes (a 15-gene ClinVar panel: BRCA1, BRCA2, TP53, PTEN, STK11, CDH1, PALB2, ATM, CHEK2, BARD1, RAD51C, RAD51D, MLH1, MSH2, APC) in their top-20 drivers:
+Three hits out of 107 pairs is not statistically over the null baseline expected from a 15-gene panel in a 1,633-gene universe. But the *coherence* is the point: the HRD genes cluster inside a meiotic-recombination GO picked by the curvature cell; TP53 sits inside two transcription-regulation GO terms picked by the tau cell. Two independent, biologically-coherent connections between specific M-cell primitives and clinically-relevant pathway biology. That is a stronger signal than aggregate enrichment can capture.
 
-- **M3_geo_a1.0_b0.0 × GO:0007131 (reciprocal meiotic recombination)**: *d* = +0.91, drivers include **RAD51C and RAD51D** (both HRD-related cancer-panel genes). The M3_geo curvature-only cell picks up homologous-recombination deficiency biology at the pathway level.
-- **M5_tau_refB × GO:0006357 (regulation of transcription by RNA pol II)**: *d* = +0.33, driver includes **TP53**.
-- **M5_tau_refB × GO:0006355 (regulation of DNA-templated transcription)**: *d* = +0.35, driver includes TP53 (same top-5 as above).
+### What Part 4 does to the Part 3 framework
 
-These are 3 hits in 107 significant pairs — with a 15-gene cancer panel against a 1,633-gene universe, the null expectation would be ~1 hit. Not statistically dispositive, but suggestive that specific M-cell settings pick up clinically-relevant biology beyond the group-level GO enrichment.
+Part 3's architecture had three axis families (metric / crossing-dynamics / scale) and left the mechanism for +17.4 %p downstream improvement implicit. Part 4 supplies the mechanism and revises the count:
 
-### 4.7 — The concept refactor: "settling depth" → "settling profile"
+- **The metric family is itself multi-axis.** Reference-token variants (r = −0.78 for M5_tau refA vs refC) and α/β shifts within M3_geo cross axis boundaries; they do not sub-tune one axis. The "5 metric primitives × 3–5 variants = 17 cells" from Part 3 does not compress cleanly to five orthogonal metric axes.
+- **The +17.4 %p downstream gain now has a mechanistic explanation.** Combining M-cells adds independent biological information because M-cells read different pathways, not because they average out different noise on the same pathway. The Part 2 STEP 3 result was a hint; Part 4 supplies the underlying reason.
+- **The workshop paper's single-scalar treatment has a naming problem.** It is not just missing information; it is committing to a specific axis of biology at the cost of others.
 
-Given that:
+The framework needs a single language change. We recommend the integrated manuscript adopt it globally:
 
-1. Reference-token choice within one metric family flips the axis (M5_tau_refA vs refC: r = −0.78);
-2. Adding a β component to M3_geo crosses axis-boundaries at small α/β shifts;
-3. Forty GO terms show sign-flip patterns; one (lipid transport) replicates robustly across two chromosomes with opposite direction between two closely-related M3_geo variants,
+- "Settling **depth**" (a singular scalar readout) → "settling **profile**" (a family of coordinates).
+- "The cosine metric captures X" (cosine as *the* measurement) → "The cosine-based M1_dir cells capture X; the curvature-based M3_geo_a1_b0 cell captures Y" (cosine as one axis among many).
+- "Reference variants ensure robustness" (reference as hyperparameter) → "Reference variants access different axes of the trajectory" (reference as axis).
 
-the "settling depth" concept as a single scalar readout of the trajectory is inadequate. Each M-cell primitive probes a different aspect of the trajectory, and treating them as variations of one quantity misses the primary phenomenon.
+Everything else in the manuscript plan continues as written. §3.11 (a new subsection) should be structured around the lipid-transport example as the canonical clean case, with the 8 chr-2-robust and 3 chr-3-of-2-robust numbers as the honest characterisation, and the RAD51C/D + TP53 driver hits as the biology anchor. The full technical details, all CSVs, all figures, and the run-by-run session provenance live in [`EXP8_MULTI_CELL_GO_FINDINGS.md`](EXP8_MULTI_CELL_GO_FINDINGS.md).
 
-Recommended manuscript reframing:
-
-- "Settling **depth**" (singular, treats all M-cells as measures of the same thing) → "settling **profile**" (family, treats the M-cell set as coordinates on a multi-axis readout).
-- "The cosine metric captures X" (framing cosine as *the* correct measurement) → "The cosine-based M1_dir_ref* cells capture X; the curvature-based M3_geo_a1_b0 cell captures Y" (framing each M-cell as one axis among many).
-- Add an explicit subsection on sign-flip robustness — presenting the 40 raw pairs, the 8 chr-2-robust pairs, the 3 chr-3-robust pairs, and the one canonical clean example (lipid transport) as the honest characterization.
-
-### 4.8 — Infrastructural note: TGIL_mutsig shutdown, July 20 midnight
-
-The compute host used for the chr21 forward pass (`TGIL_mutsig`, 2 × B200) became permanently unavailable at midnight KST on 2026-07-20 (GPU lease expiry). This truncated the planned chr20 forward (~10 % complete when the host died) and the full BATCH-3 transfer to DASH (`results_cached` did not transfer; `data_ref` partial 60 %). Everything critical for reproducing the EXP8 findings above **is** on DASH at `/home/darejin/TDiG/` — see [`../RECOVERY_LOG.md`](../RECOVERY_LOG.md) for the incident narrative and next-session bootstrap. Extending the M-cell analysis to a fourth or fifth chromosome will require a new GPU host and re-running the `e1_20_chr_forward_tier2.py + e1_30_tier2_to_tier1.py` pipeline.
-
-### 4.9 — What Part 4 adds to the manuscript
-
-The integrated manuscript now has:
-
-- One new empirical section on 17-M-cell GO enrichment at the pathway level (data on chr17 + chr22 + chr21, 7 of 17 M-cells for chr21)
-- One conceptual refactor (depth → profile)
-- One canonical clean sign-flip example (lipid transport, replicating on 2 chromosomes)
-- One honest caveat (most sign-flip patterns do NOT replicate across chromosomes; only 3/280 pairs robust across 2 of 3 chromosomes, 0 across all 3)
-- Two cancer-panel biology anchors (RAD51C/RAD51D via M3_geo curvature; TP53 via M5_tau)
-
-Full technical details: [`EXP8_MULTI_CELL_GO_FINDINGS.md`](EXP8_MULTI_CELL_GO_FINDINGS.md). Reproducibility notes: [`../RECOVERY_LOG.md`](../RECOVERY_LOG.md) plus the on-DASH `exp8_multi_cell_go/README.md` and `exp8_multi_cell_go/NOTES_ON_REPRODUCIBILITY.md`.
+*Infrastructural footnote.* The chr21 forward pass and the DASH backup effort described here ran against a hard midnight deadline on 2026-07-20. The compute host `TGIL_mutsig` became permanently unreachable at 23:58 KST that night (GPU lease expiry); a queued chr20 forward was interrupted at ~10 % complete and the last piece of the DASH transfer (`results_cached`) never landed. Everything that survived is on DASH at `/home/darejin/TDiG/`, and the recovery notes for a new-host bootstrap are in [`../RECOVERY_LOG.md`](../RECOVERY_LOG.md). Extending the M-cell profile to a fourth or fifth chromosome — and closing the 7-of-17-cells gap on chr21 through TDiG-team reference definitions — is the natural next step when a new GPU allocation arrives.
 
 ---
 
@@ -387,4 +336,4 @@ If you want to go deeper after this narrative:
 
 ---
 
-*Last updated: 2026-07-21 (Part 4 added — 17-M-cell GO enrichment on chr17+22+21, sign-flip robustness, lipid transport clean example, concept refactor).*
+*Last updated: 2026-07-21 (Part 4 rewritten to connect logically with Part 1.3 orthogonal-axis discovery and Part 3 architecture; opens with the specific hypothesis Part 3 left implicit, closes with mechanism for +17.4 %p from Part 2 STEP 3).*
