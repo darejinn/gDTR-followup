@@ -76,9 +76,14 @@ gDTR-followup/
 | 8 | Does variant peak layer index disrupted information level? | intron/3'UTR peak L=8; missense/synonymous peak L=27 | TDiG §A2 (to be merged) | TDiG |
 | 9 | What happens at L29? | Context probing crashes 0.980→0.799; variant crashes 0.85→0.79 | TDiG §B1 (to be merged) | TDiG |
 | 10 | Is there a low-dim structure behind M1–M5? | PC1 = 75.7 % variance; encodes bidirectional settling in a single direction | TDiG §C (to be merged) | TDiG |
+| 11 | Do M-cells read *different biology* at pathway level, not just stronger signals? | 40 sign-flip GO terms across 17 cells; ref-token choice within one family gives Spearman r = **−0.78** on 471 GO terms | EXP8: `results/sign_flip_go_terms.csv`, `cell_similarity.csv` (on DASH) | pt36 |
+| 12 | Do the sign-flip patterns replicate across chromosomes? | chr17+chr22 alone: 8 / 680 pairs robust (1.2 %); chr17+22+21: **0** across all 3, 3 across any-2 | EXP8: `results/sign_flip_robustness_3chr.csv` (on DASH) | pt36 |
+| 13 | Is there any clean sign-flip that survives chr replication? | **GO:0006869 lipid transport**: M3_geo_β=0 gives *d* ≈ −0.8 on both chr17+22, M3_geo_β=0.5+cosine-dom gives *d* ≈ +0.6 on both. Same GO, opposite direction, robust. | EXP8 §7.3 | pt36 |
+| 14 | Do the M-cells pick up cancer-panel biology in top drivers? | M3_geo curvature × meiotic recombination top-drivers include RAD51C + RAD51D (HRD); M5_tau_refB × transcription includes TP53 | EXP8: `results/driver_genes_summary.csv` (on DASH) | pt36 |
+| 15 | Concept refactor from workshop paper: | "Settling **depth**" (singular scalar) → "settling **profile**" (multi-axis family). Reference-token and α/β variants cross axis-boundaries, not sub-tune the same axis. | NARRATIVE.md §4.7 | pt36 |
 
-**Full narrative**: [`docs/RESULTS.md`](docs/RESULTS.md)
-**Integration status**: rows 7–10 marked "to be merged" require pulling TDiG artifacts (see [`tdig_integration/README.md`](tdig_integration/README.md) once created)
+**Full narrative**: [`docs/RESULTS.md`](docs/RESULTS.md) — see also [`docs/NARRATIVE.md`](docs/NARRATIVE.md) Part 4 (2026-07-21) for the EXP8 story and [`docs/EXP8_MULTI_CELL_GO_FINDINGS.md`](docs/EXP8_MULTI_CELL_GO_FINDINGS.md) for technical details.
+**Integration status**: rows 7–10 marked "to be merged" require pulling TDiG artifacts (see [`tdig_integration/README.md`](tdig_integration/README.md) once created). Rows 11–15 are on DASH at `/home/darejin/TDiG/exp8_multi_cell_go/` (compute host TGIL_mutsig is permanently offline since 2026-07-20 midnight; see [`RECOVERY_LOG.md`](RECOVERY_LOG.md)).
 
 ## 4. Locked parameters (paper reference; do not modify)
 
@@ -115,4 +120,4 @@ TDiG's contributions will be jointly credited when the integrated preprint is po
 MIT. See [`LICENSE`](LICENSE).
 
 ---
-_Last updated: 2026-07-19_
+_Last updated: 2026-07-21 (added EXP8 17-M-cell GO findings; results rows 11–15)_

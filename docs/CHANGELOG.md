@@ -2,6 +2,35 @@
 
 Append-only log of what was added to this repo and when.
 
+## 2026-07-21 — EXP8 17-M-cell GO enrichment + 3-chromosome robustness + concept refactor
+
+### New empirical content
+- **`docs/NARRATIVE.md` Part 4 added** — extending the M-cell family to a third chromosome (chr21) and the GO story. Nine-subsection narrative covering motivation, EXP8 pipeline, 40 sign-flip GO terms, 2-chr and 3-chr robustness, the clean lipid transport example, cancer-panel driver hits, and the "settling depth → settling profile" concept refactor. Existing "What remains open" renumbered to Part 5.
+- **`docs/EXP8_MULTI_CELL_GO_FINDINGS.md` (new, ~14 KB)** — technical companion. Pipeline description, all CSV outputs enumerated with schema, cluster analysis, sign-flip robustness tables, known bugs, reproduction commands, session timestamps.
+
+### Headline additions (all data on DASH `/home/darejin/TDiG/exp8_multi_cell_go/`):
+- **40 sign-flip GO terms** in combined chr17 + chr22 dataset (17 M-cells × 471 full BP GO terms)
+- **8 pairs robust across chr17 + chr22 alone** (1.2 % of 680 tests) — sample-size-boost caveat
+- **0 pairs robust across chr17 + chr22 + chr21** (of 280 tests); 3 robust across any 2 of 3
+- **Clean example**: GO:0006869 lipid transport shows genuine sign-flip between M3_geo_a0.5_b1.0 (+) and M3_geo_a1.0_b0.0 (−), replicating on both chr17 and chr22
+- **Cancer-panel driver hits**: RAD51C + RAD51D in M3_geo curvature × meiotic recombination; TP53 in M5_tau_refB × transcription regulation
+- **Reference-token choice flips axis** within the same metric family: M5_tau_refA vs M5_tau_refC Spearman r = −0.78 on 471 GO terms
+
+### Concept refactor
+- **"Settling depth" (singular scalar) → "settling profile" (multi-axis family)**. Recommended manuscript language change; each M-cell reads a different axis, not a stronger version of the same axis. See NARRATIVE.md §4.7 and EXP8_MULTI_CELL_GO_FINDINGS.md §10.
+
+### Infrastructure
+- **New chr21 tier1 parquet** (13,365 windows × 7 M-cells) — first extension of the M-cell family beyond the TDiG team's chr17 + chr22 upstream data
+- `wgs/scripts/e1_20_chr_forward_tier2.py` (new) — Evo 2 7B forward saving tier2-like scalars, optimised HDF5 (per-window chunks, no gzip) for ~9× speedup vs naive
+- `wgs/scripts/e1_30_tier2_to_tier1.py` (new) — derives 7 of 17 M-cells from the tier2 h5 (M1_dir_refA, M2_mag_refA, M3_geo × 5 α/β variants). The other 10 M-cells (refB/refC + M4_set + M5_tau) require TDiG-team reference definitions.
+- `exp8_multi_cell_go/scripts/e8_00 → e8_41` (six Python scripts totalling ~40 KB) — the EXP8 pipeline itself
+
+### Infrastructural incident
+- **TGIL_mutsig went offline at 2026-07-20 midnight KST** (GPU lease expiry). Truncated the planned chr20 forward (~10 % complete when host died) and the BATCH-3 DASH transfer (`results_cached` did not transfer). All critical artifacts backed up to DASH; see [`../RECOVERY_LOG.md`](../RECOVERY_LOG.md) for the incident narrative and next-session bootstrap.
+
+### Known bug
+- `e1_30` M2_mag_refA gamma calibration returns ~1.33 M on chr21 due to some intron positions having near-zero `norm_h_29`. Skip-window and outlier-clip filters didn't fully resolve; needs additional filter on `norm_h_29 < threshold` or a switch to median-based calibration for M2_mag primitives. Impact: M2_mag_refA on chr21 is de facto dead-cell. Other 6 M-cells on chr21 unaffected.
+
 ## 2026-07-19 — Reframed as integrated-manuscript repository
 
 **Scope change**: this repository is no longer a "standalone follow-up analysis" but the **working home of the integrated gDTR journal manuscript**, currently in preparation.
