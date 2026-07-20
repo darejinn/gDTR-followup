@@ -12,12 +12,12 @@ Cho, Kang, Park, and Kim asked a very specific interpretability question about E
 
 > When, along the layer stack, does a nucleotide token's representation *stabilise* against the model's output-ready frame?
 
-They introduced **`c(t)`** — the smallest layer at which a running-minimum envelope of the cosine distance $D_\cos(\ell, t) = 1 - \cos(h_\ell(t), h_\text{norm}(t))$ falls below a fixed threshold `γ_cos = 0.397`. That single scalar told a clean story:
+They introduced **`c(t)`** — the smallest layer at which a running-minimum envelope of the cosine distance $D_{\cos}(\ell, t) = 1 - \cos(h_{\ell}(t), h_{\text{norm}}(t))$ falls below a fixed threshold `γ_cos = 0.397`. That single scalar told a clean story:
 
 - **Splice donors and acceptors settle ~2 layers earlier than intronic contexts** on chr17 and chr22 (Cohen's *d* ≈ −0.35).
 - **ENCODE cCRE-ELS regions** also settle earlier, at a milder magnitude (*d* ≈ −0.12).
 - **Two-sided motif experiments**: replacing the canonical GT with AA deepens the settling by 0.46 layers (the model needs longer to resolve a broken motif); shuffling the ±100 bp flank while keeping the GT makes it settle 3.18 layers earlier (with no context to integrate, the model commits quickly).
-- **Variant scoring**: a 32-dimensional trajectory of Δ$D_\cos$ per layer reaches AUROC 0.844 on 8,008 ClinVar SNVs across 15 cancer genes (matching AlphaMissense's operating range without any training).
+- **Variant scoring**: a 32-dimensional trajectory of Δ$D_{\cos}$ per layer reaches AUROC 0.844 on 8,008 ClinVar SNVs across 15 cancer genes (matching AlphaMissense's operating range without any training).
 
 The paper was accepted at the ICML 2026 GenBio Workshop as a short paper. It answered the *when* question cleanly, but it left several *what else* questions open. That is where this repository begins.
 
@@ -29,27 +29,27 @@ Three concrete follow-up questions:
 
 1. **Whole-genome extension.** The paper's claims were made on chr22 (γ calibration) and chr17 (held-out). Do they hold across all 24 chromosomes?
 2. **Variant-effect downstream tasks.** The paper reported a binary pathogenicity AUROC. Can the same features do more — for example, distinguish variant subtypes?
-3. **Threshold-crossing dynamics.** The running-min envelope smooths the trajectory to a scalar. What information is thrown away — how often does $D_\cos$ cross γ, and when?
+3. **Threshold-crossing dynamics.** The running-min envelope smooths the trajectory to a scalar. What information is thrown away — how often does $D_{\cos}$ cross γ, and when?
 
 These three lines each turned into a subproject.
 
 ### 1.1 Baseline verification first
 
-Before extending anything, we reproduced the paper's headline AUROC on the migrated data. Running the paper's script on the cached 32-d Δ$D_\cos$ features gave **AUROC 0.8437 ± 0.021** (paper: 0.844) and best single-layer AUROC 0.7291 at L=30 (paper: 0.729 at L=30). Reproduction matched to three decimals. Everything downstream is anchored to this verified baseline.
+Before extending anything, we reproduced the paper's headline AUROC on the migrated data. Running the paper's script on the cached 32-d Δ$D_{\cos}$ features gave **AUROC 0.8437 ± 0.021** (paper: 0.844) and best single-layer AUROC 0.7291 at L=30 (paper: 0.729 at L=30). Reproduction matched to three decimals. Everything downstream is anchored to this verified baseline.
 
 ### 1.2 Variant subtype classification — H2b
 
 The paper's §3.3 showed that different variant consequences peak at different layers as a group median (Kruskal-Wallis p = 3×10⁻¹⁰, ε² = 0.013). But group medians don't tell us whether *individual* variants are separable.
 
-We joined ClinVar's Molecular Consequence field onto the 8,008 SNVs, filtered to four canonical classes (missense / nonsense / synonymous / canonical_splice), and trained a multinomial logistic regression on the 32-d Δ$D_\cos$ vector with 10-fold stratified CV.
+We joined ClinVar's Molecular Consequence field onto the 8,008 SNVs, filtered to four canonical classes (missense / nonsense / synonymous / canonical_splice), and trained a multinomial logistic regression on the 32-d Δ$D_{\cos}$ vector with 10-fold stratified CV.
 
-Result: **macro-F1 = 0.641** on 4 classes (chance = 0.25). One-vs-rest AUROC = 0.889 for nonsense and synonymous, 0.875 for canonical_splice, 0.741 for missense. A 1-d scalar (the single largest |Δ$D_\cos$|) recovers only 30 % of the gain over chance, so the *shape* of the trajectory matters, not just its peak height.
+Result: **macro-F1 = 0.641** on 4 classes (chance = 0.25). One-vs-rest AUROC = 0.889 for nonsense and synonymous, 0.875 for canonical_splice, 0.741 for missense. A 1-d scalar (the single largest |Δ$D_{\cos}$|) recovers only 30 % of the gain over chance, so the *shape* of the trajectory matters, not just its peak height.
 
 The paper's group-level finding was actually understating a per-variant classifiable signal. This gave us a downstream task to keep sharpening.
 
 ### 1.3 Threshold-crossing dynamics — H3a
 
-The running-min envelope hides how many times $D_\cos$ crosses γ. We defined a new per-position feature `oscil` = the number of extra crossings beyond a single dip, forwarded 100 random chr22 6-kb windows through Evo 2, and compared each context to the intronic baseline.
+The running-min envelope hides how many times $D_{\cos}$ crosses γ. We defined a new per-position feature `oscil` = the number of extra crossings beyond a single dip, forwarded 100 random chr22 6-kb windows through Evo 2, and compared each context to the intronic baseline.
 
 The **first result that changed the direction of the project** appeared here:
 
@@ -160,9 +160,9 @@ Same direction, 12 % stronger. 23 of 24 chromosomes have *d* < 0 (chrY is the ex
 
 ### STEP 5 — How chromosome-invariant is γ = 0.397, really?
 
-The paper's `γ_cos = 0.397` was calibrated as the q70 of the running-min $D_\cos$ at the penultimate layer on chr22. §App A.2 reports low sensitivity across a 5×5 grid, and §3.1 shows that the same γ transfers to chr17 with 94 % magnitude preservation. But is it *chromosome-invariant*, or is chr17 just close to chr22?
+The paper's `γ_cos = 0.397` was calibrated as the q70 of the running-min $D_{\cos}$ at the penultimate layer on chr22. §App A.2 reports low sensitivity across a 5×5 grid, and §3.1 shows that the same γ transfers to chr17 with 94 % magnitude preservation. But is it *chromosome-invariant*, or is chr17 just close to chr22?
 
-We used per-chromosome q70 of intron `min_D` as a proxy (the cache stores `min_D`, not the penultimate-layer $D_\cos$, so the numbers are related but not identical).
+We used per-chromosome q70 of intron `min_D` as a proxy (the cache stores `min_D`, not the penultimate-layer $D_{\cos}$, so the numbers are related but not identical).
 
 Result:
 
@@ -170,7 +170,7 @@ Result:
 - WGS SD across 24 chromosomes = **0.0015 (0.15 %)**
 - Chr-to-chr range: [0.4954, 0.5033]
 
-The proxy value is different from paper's 0.397 (as expected: `min_D` vs penultimate-layer $D_\cos$), but the chromosome-to-chromosome variation is **extraordinarily small** — 24 chromosomes with SD 0.15 %. Whatever the exact calibration definition, its chromosome-invariance is much stronger than the paper's §App A.2 grid ablation could show.
+The proxy value is different from paper's 0.397 (as expected: `min_D` vs penultimate-layer $D_{\cos}$), but the chromosome-to-chromosome variation is **extraordinarily small** — 24 chromosomes with SD 0.15 %. Whatever the exact calibration definition, its chromosome-invariance is much stronger than the paper's §App A.2 grid ablation could show.
 
 ---
 
