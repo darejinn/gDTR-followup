@@ -6,9 +6,9 @@ Every feature you see in `results/` is defined here. Whenever a result file refe
 
 | Symbol | Meaning |
 |---|---|
-| $h_\ell(t)$ | residual-stream state at layer $\ell$, token position $t$ |
+| $h_{\ell}(t)$ | residual-stream state at layer $\ell$, token position $t$ |
 | $h_{\mathrm{norm}}(t)$ | post-final-RMSNorm state (Evo 2 output-ready frame) |
-| $D_{\cos}(\ell, t)$ | $1 - \cos(h_\ell(t), h_{\mathrm{norm}}(t))$ — cosine distance to output frame |
+| $D_{\cos}(\ell, t)$ | $1 - \cos(h_{\ell}(t), h_{\mathrm{norm}}(t))$ — cosine distance to output frame |
 | $\gamma_{\cos}$ | **0.397** (paper-locked, chr22 penultimate q70) |
 | $L$ | 32 (Evo 2 7B block count) |
 | $L^\star$ | 29 (paper's "canonical tap" — deepest pre-rotation layer) |
@@ -59,11 +59,11 @@ $$\mathrm{below\_frac}(t) = \frac{1}{L} \sum_{\ell=0}^{L-1} \mathbb{1}[D_{\cos}(
 
 ### `min_D`
 
-$$\mathrm{min\_D}(t) = \min_\ell D_{\cos}(\ell,t)$$
+$$\mathrm{min\_D}(t) = \min_{\ell} D_{\cos}(\ell,t)$$
 
 ### `argmin_layer`
 
-$$\mathrm{argmin\_layer}(t) = \arg\min_\ell D_{\cos}(\ell,t)$$
+$$\mathrm{argmin\_layer}(t) = \arg\min_{\ell} D_{\cos}(\ell,t)$$
 
 **Where computed**: [`scripts/exp3/e3_10_compute_crossings.py`](../scripts/exp3/e3_10_compute_crossings.py) → `A_crossing_stats.parquet` for chr22; [`scripts/wgs/e1_00_chr_forward.py`](../scripts/wgs/e1_00_chr_forward.py) for all 24 chr per-position parquets.
 
@@ -89,7 +89,7 @@ Layer at which the longest streak begins.
 
 ### `amplitude_below_gamma`
 
-$$\mathrm{amplitude}(t) = \max(0, \gamma - \min_\ell D_{\cos}(\ell,t))$$
+$$\mathrm{amplitude}(t) = \max(0, \gamma - \min_{\ell} D_{\cos}(\ell,t))$$
 
 How far below γ the trajectory dipped.
 
@@ -119,8 +119,8 @@ The paper's 32-d `ΔD_cos` vector: for a variant at position $p$ with ref sequen
 $$\Delta D_{\cos}(\ell, p) = D_{\cos}^{\mathrm{alt}}(\ell, p) - D_{\cos}^{\mathrm{ref}}(\ell, p)$$
 
 Additional scalars computed by paper:
-- `max_abs_dD` = $\max_\ell |\Delta D_{\cos}(\ell, p)|$
-- `argmax_layer` = $\arg\max_\ell |\Delta D_{\cos}(\ell, p)|$ (1-based)
+- `max_abs_dD` = $\max_{\ell} |\Delta D_{\cos}(\ell, p)|$
+- `argmax_layer` = $\arg\max_{\ell} |\Delta D_{\cos}(\ell, p)|$ (1-based)
 - `signed_argmax` = $\Delta D_{\cos}(\mathrm{argmax\_layer}, p)$
 
 ## H3b variant re-forward features
